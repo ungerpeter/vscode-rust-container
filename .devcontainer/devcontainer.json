@@ -9,7 +9,8 @@
 		// and USER_GID in .devcontainer/Dockerfile to match your user if not 1000.
 		// "-u", "vscode",
 
-		"--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined"
+		"--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined",
+		"-v", "${env:HOME}${env:USERPROFILE}/.ssh:/root/.ssh-localhost:ro"
 	],
 
 	// Use 'settings' to set *default* container specific settings.json values on container create. 
@@ -25,6 +26,8 @@
 
 	// Uncomment the next line to run commands after the container is created.
 	// "postCreateCommand": "rustc --version"
+
+	"postCreateCommand": "mkdir -p /root/.ssh && cp -r /root/.ssh-localhost/* /root/.ssh && chmod 700 /root/.ssh && chmod 600 /root/.ssh/*",
 
 	// Add the IDs of extensions you want installed when the container is created in the array below.
 	"extensions": [
